@@ -11,7 +11,8 @@ const app = express();
 
 // Configure Cross-Origin Resource Sharing (CORS) to allow requests from your frontend
 app.use(cors({
-    origin:["http://localhost:3000","https://student-dashboard-frontend.vercel.app/"]
+    origin:["http://localhost:3000",
+    "https://student-dashboard-frontend.vercel.app/"]
 }));
 
 // Initialize Firebase Admin SDK with your service account key
