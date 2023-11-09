@@ -10,7 +10,9 @@ const serviceAccount = require('./serviceAccountKey.json');
 const app = express();
 
 // Configure Cross-Origin Resource Sharing (CORS) to allow requests from your frontend
-app.use(cors());
+app.use(cors({
+    origin:["http://localhost:3000"]
+}));
 
 // Initialize Firebase Admin SDK with your service account key
 // const serviceAccount = require('./serviceAccountKey.json');
