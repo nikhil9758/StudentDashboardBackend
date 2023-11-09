@@ -15,6 +15,10 @@ app.use(cors({
     "https://student-dashboard-frontend.vercel.app/"]
 }));
 
+// app.use('/enrollments/enroll',(req,res)=>{
+//     console.log(req,"api...")
+// })
+
 // Initialize Firebase Admin SDK with your service account key
 // const serviceAccount = require('./serviceAccountKey.json');
 const firebaseapp=admin.initializeApp({

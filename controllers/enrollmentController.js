@@ -2,14 +2,18 @@
 const admin= require('firebase-admin')
 
 const enrollInCourse = async (req, res) => {
+    console.log("error0......")
   const { courseId, studentId } = req.body;
   try {
     console.log(courseId,studentId)
+    console.log("error1......")
     // const studentDoc = admin.firestore().collection('user').doc(studentId);
-    // console.log(studentDoc)
+    // console.log(studentDoc)z
     const studentDocSnapshot = await admin.firestore().collection('user').doc(studentId).get();
+    console.log("error2......")
     // console.log("data",studentDocSnapshot.data().enrolledcourses)
     const enrolledcourses=studentDocSnapshot.data().enrolledcourses
+    console.log("length........",enrolledcourses?.length)
     let courses=[]
     courses= [...enrolledcourses,courseId]
     console.log("couses",courses)
@@ -48,6 +52,19 @@ const retrieveEnrolledCourses = async (req, res) => {
   }
 };
 
+const createEnrolledCourses = async (req, res) => {
+    const {studentId} = req.body;
+    console.log(studentId)
+    try {
+        await admin.firestore().collection('user').doc(studentId).set({
+        enrolledcourses:[]
+      })
+      return res.json({message:"successgully created"});
+    } catch (error) {
+      return res.status(500).json({ error: 'Failed to retrieve enrolled courses.' });
+    }
+  };
+
 const getCourseStatus= async(req,res)=>{
     try{
         const studentId = req.params.studentId;
@@ -72,6 +89,7 @@ const markCourseCompleted= async(req,res)=>{
         const db= admin.firestore()
         const batch= db.batch()
         let docId=''
+        console.log("here...........")
         const query = await db.collection('usercourse').where('studentId','==',studentId).where("courseId",'==',courseId)
         query.get().then(async (snapshot)=>{
             snapshot.forEach(async (doc)=>{
@@ -98,4 +116,4 @@ const markCourseCompleted= async(req,res)=>{
         console.log(error)
     }
 }
-module.exports={enrollInCourse,retrieveEnrolledCourses, getCourseStatus, markCourseCompleted}
+module.exports={enrollInCourse,retrieveEnrolledCourses, getCourseStatus, markCourseCompleted, createEnrolledCourses}
